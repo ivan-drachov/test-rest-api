@@ -5,11 +5,11 @@ import { MongooseModule } from '@nestjs/mongoose';
 import {
   AppointmentSchema,
   Appointment,
-} from 'src/schemas/appointment.schema';
+} from '../schemas/appointment.schema';
 import { AppointmentsRepository } from './appointments.repository';
-import { UsersModule } from 'src/users/users.module';
-import { DoctorsModule } from 'src/doctors/doctors.module';
-import { NotificationsModule } from 'src/notifications/notifications.module';
+import { UsersModule } from '../users/users.module';
+import { DoctorsModule } from '../doctors/doctors.module';
+import { NotificationsModule } from '../notifications/notifications.module';
 
 @Module({
   imports: [

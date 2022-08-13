@@ -1,8 +1,8 @@
 import {  Injectable, NotFoundException, ForbiddenException} from '@nestjs/common';
 import { AppointmentsRepository } from './appointments.repository';
-import { UsersService } from 'src/users/users.service';
-import { DoctorsService } from 'src/doctors/doctors.service';
-import { NotificationsService } from 'src/notifications/notifications.service';
+import { UsersService } from '../users/users.service';
+import { DoctorsService } from '../doctors/doctors.service';
+import { NotificationsService } from '../notifications/notifications.service';
 import { AcceptAppointmentDto } from './dto/accept-appointment.dto';
 
 @Injectable()
@@ -16,9 +16,11 @@ export class AppointmentsService {
 
   async createAppointment(CreateAppointmentDto): Promise<any> {
     const findActiveAppointments = await this.checkAppointment(
-      CreateAppointmentDto.doctor_id,
+      CreateAppointmentDto.doctor,
       true,
+      CreateAppointmentDto.date
     );
+    console.log(findActiveAppointments.length)
     if (findActiveAppointments.length >= 3) {
       throw new ForbiddenException('Doctor not free');
     }
@@ -38,10 +40,11 @@ export class AppointmentsService {
     return appointment;
   }
 
-  async checkAppointment(doctor_id: string, active: boolean): Promise<any> {
+  async checkAppointment(doctor_id: string, active: boolean, date: Date): Promise<any> {
     const findActiveAppointments = await this.appointmentsRepository.findAll(
-      {doctor: doctor_id},
+      doctor_id,
       active,
+      date
     );
     return findActiveAppointments;
   }

@@ -18,9 +18,11 @@ export class AppointmentsRepository {
     return result;
   }
 
-  async findAll(doctor_id, active): Promise<any> {
+  async findAll(doctor_id, active, dat): Promise<any> {
+    let datum = new Date(dat)
     const result = await this.appointmentModel.find({
-      $and: [{ doctor: doctor_id }, { active: active }],
+      $and: [{ doctor: doctor_id }, { active: active }]
+      
     });
     return result;
   }
